@@ -56,19 +56,17 @@ Other parameters for generating the projects are the following :
 
 # generated project
 
-The project is pretty standard, it uses noose2 for unit testing, behave for uat and a Makefile for local operations.
+The project is pretty standard, it used [black](https://pypi.org/project/black/) for source formatting, [noose2](https://pypi.org/project/nose2/) for unit testing, [behave](https://behave.readthedocs.io/en/latest/) for uat and a Makefile for local operations.
 
 The .github directory of the generated project contains minimal workflows for dependabot and dev building the application.
 
-Also note the RELEASE.txt file that contains the version of the project. It is used by both Makefile and github workflows to generate a tarball package.
+Also note the RELEASE.txt file that contains the version of the project and is used by both Makefile and github workflows to generate the tarball package.
 
-# code formatting tests
+Please note that the Makefile targets will check the format of your source code and will throw an error if it is not aligned to the formatting policy ! 
 
-The Makefile will check the format of your source code and will throw an error if it is not aligned to the formatting policy.
+So before adding/editing the code, ensure that you have a formatter extension that can support black and autoformat the source according to the specified rules, otherwise you'll get angry very very quickly ...
 
-In order to make sure your code is correctly formatted before triggering any make targets, install and use the Black plugin in your IDE.
-
-For VSCode you can ue the Back Formatter extension ( https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter )
+For VSCode you can use the [Back Formatter](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter) extension.
 
 # next steps 
 
