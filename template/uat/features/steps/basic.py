@@ -1,18 +1,19 @@
 from behave import given
 from behave import when
 from behave import then
+from mypackage.calculator import Calculator
 
 
-@given('we have behave installed')
+@given('a valid calculator')
 def step_impl(context):
-    pass
+    context.calculator = Calculator()
 
 
-@when('we implement a test')
-def step_impl(context):
-    assert True is not False
+@when('adding "{value1}" and "{value2}" using that calculator')
+def step_impl(context, value1, value2):
+    context.result = context.calculator.add(int(value1), int(value2))
 
 
-@then('behave will test it for us!')
-def step_impl(context):
-    assert context.failed is False
+@then('the calculator returns result value "{result}"')
+def step_impl(context, result):
+    assert int(context.result) is int(result)

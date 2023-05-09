@@ -1,8 +1,9 @@
-Feature: showing off behave
+Feature: example acceptance test
 
-  Scenario: run a simple test
-     Given we have behave installed
-      When we implement a test
-      Then behave will test it for us!
+  Scenario: ensure the integer additions are correctly computed by the calculator
+     Given a valid calculator
+      When adding "12" and "30" using that calculator
+      Then the calculator returns result value "42"
+
 
 

@@ -1,6 +1,13 @@
 #!/usr/bin/python3
 
 import logging
-logging.basicConfig(format="[%(asctime)s] [%(levelname)s] %(message)s", level=logging.INFO)
+from logging import Logger
+from mypackage.calculator import Calculator
 
-logging.getLogger("main").info("Hello Python")
+logging.basicConfig(format="[%(asctime)s] [%(levelname)s] %(message)s", level=logging.INFO)
+logger: Logger = logging.getLogger("main")
+
+logger.info("starting processing ")
+c: Calculator = Calculator()
+logger.info("helloer just said that 2+2=" + str(c.add(2, 2)))
+logger.info("finished processing ")
