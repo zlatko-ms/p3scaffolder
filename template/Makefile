@@ -2,13 +2,15 @@
 NAME:= "projectname"
 RELNUM := $(shell cat RELEASE.txt)
 PACKAGENAME="$(NAME).rel.v$(RELNUM).tar.gz"
-UATDIR:= "uat/features"
+UATDIR:= "test/uat/features"
+UTESTDIR:= "test/unit"
+INTESTDIR:= "test/integ"
+UNITTEST=test.unit.mypackage.test_calculator.TestCalculator.test_integer_addition
 
-UNITTEST=test.mypackage.test_iotools.TestIOTools.test_listToFile
-
-all: clean dependencies format tests acceptance
+all: clean dependencies format unit-tests integ-tests uat
 githubpipeline: pyformatcheck tests
 format: tounix pyformat pyformatcheck
+devtest: unit-tests integ-tests
 
 dependencies:
 	@echo "[>] ############################################"
@@ -47,23 +49,35 @@ clean:
 	@rm -f "$(NAME).rel.*"
 	@find . -type d -name "__pycache__" | xargs rm -rf
 
-tests:
+unit-tests:
 	@echo "[>] ############################################"
 	@echo "[>] running unit tests"
 	@echo "[>] ############################################"
-	@python3 -m nose2 -v -F
+	@python3 -m nose2 -v -F  -s $(UTESTDIR) -t .
 
 singletest:
 	@echo "[>] ############################################"
 	@echo "[>] running test $(UNITTEST)"
 	@echo "[>] ############################################"
-	@python3 -m nose2 -v $(UNITTEST)
+	@python3 -m nose2 -v $(UNITTEST) -s $(INTESTDIR) -t .
 
-acceptance:
+integ-tests:
+	@echo "[>] ############################################"
+	@echo "[>] running integ tests"
+	@echo "[>] ############################################"
+	@python3 -m nose2 -v -F  -s $(INTESTDIR) -t .
+
+uat:
 	@echo "[>] ############################################"
 	@echo "[>] running uat from directory $(UATDIR)"
 	@echo "[>] ############################################"
-	@python3 -m behave uat/features
+	@python3 -m behave $(UATDIR)
+
+uat-output:
+	@echo "[>] ############################################"
+	@echo "[>] running uat from directory $(UATDIR)"
+	@echo "[>] ############################################"
+	@python3 -m behave $(UATDIR) --no-capture
 
 release:
 	@echo "[>] ############################################"

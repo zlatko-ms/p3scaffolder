@@ -38,4 +38,8 @@ jobs:
         make pyformatcheck
     - name: Run Python Unit Tests
       run: |
-        make tests
+        make unit-tests
+    - name: Run Python Integ Tests
+      run: |
+        make unit-tests
+  
